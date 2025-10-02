@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("bg.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+    }
+    .login-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+      width: 350px;
+    }
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #000000;
+    }
+    .form-control {
+      border-radius: 20px;
+      background: transparent;
+      color: #fff;
+    }
+    .form-control::placeholder {
+      color: #ddd;
+    }
+    .btn-login {
+      border-radius: 20px;
+      background: white;
+      color: black;
+      font-weight: bold;
+    }
+    label.error {
+      color: #fe9494;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: block;
+    }
+    .links {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+    .links a {
+      color: #ddd;
+      text-decoration: none;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    .register-text {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #eee;
+    }
+    .register-text a {
+      color: #000000;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="mb-3">
+        <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+      </div>
+      <div class="mb-3">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <input type="checkbox" id="rememberMe"> 
+          <label for="rememberMe" class="text-light">Remember me</label>
+        </div>
+        <a href="#" class="text-light">Forgot Password?</a>
+      </div>
+      <button type="submit" class="btn btn-login w-100">Login</button>
+      <p class="register-text">Don't have an account? <a href="register.html">Register here</a></p>
+    </form>
+  </div>
+
+<script>
+$(document).ready(function () {
+  $("#loginForm").validate({
+    rules: {
+      username: { required: true },
+      password: { required: true }
+    },
+    messages: {
+      username: "Please enter your username (email)",
+      password: "Please enter your password"
+    },
+    submitHandler: function (form) {
+      let storedUser = JSON.parse(localStorage.getItem("registeredUser"));
+      let user = $("#username").val();
+      let pass = $("#password").val();
+
+      if (storedUser && storedUser.email === user && storedUser.password === pass) {
+        localStorage.setItem("username", storedUser.name);
+
+
+        alert("Login successful! Welcome " + storedUser.name + "!");
+
+
+        window.location.href = "landing.html";
+      } else {
+        alert("Invalid username or password!");
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>
